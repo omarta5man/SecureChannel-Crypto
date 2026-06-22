@@ -1,20 +1,15 @@
 # tests for phase 2 (ChaCha20-Poly1305).
 # the block function and poly1305 are checked against the official RFC 8439
-# vectors. encrypt and aead are checked with a round-trip on a sample message M.
+# vectors.
 
 from primitives.chacha20 import chacha20_block, chacha20
 from primitives.poly1305 import poly1305_mac
 from primitives.aead import encrypt, decrypt
 
-# a sample message to encrypt and decrypt (just some filler paragraph text)
-M = (
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
-    "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
-    "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu "
-    "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
-    "culpa qui officia deserunt mollit anim id est laborum."
-)
+# a sample message to encrypt and decrypt (known answer RFC 8439)
+M = ("Ladies and Gentlemen of the class of '99: "
+    "If I could offer you only one tip for the future, "
+    "sunscreen would be it.")
 
 
 def test_chacha20_block():
@@ -31,12 +26,20 @@ def test_chacha20_block():
 
 
 def test_chacha20_encrypt():
-    # encrypt M then decrypt it again, we should get M back
+    # encrypt M then compare with expected output
     key = bytes(range(32))
     nonce = bytes.fromhex("000000000000004a00000000")
     ciphertext = chacha20(key, 1, nonce, M.encode())
-    assert ciphertext != M.encode()# the data actually changed
-    assert chacha20(key, 1, nonce, ciphertext) == M.encode()
+    assert ciphertext.hex() == (
+        "6e2e359a2568f98041ba0728dd0d6981"
+        "e97e7aec1d4360c20a27afccfd9fae0b"
+        "f91b65c5524733ab8f593dabcd62b357"
+        "1639d624e65152ab8f530c359f0861d8"
+        "07ca0dbf500d6a6156a38e088a22b65e"
+        "52bc514d16ccf806818ce91ab7793736"
+        "5af90bbf74a35be6b40b8eedf2785e42"
+        "874d"
+    )
 
 
 def test_poly1305():
@@ -54,8 +57,21 @@ def test_aead():
                         "909192939495969798999a9b9c9d9e9f")
     nonce = bytes.fromhex("070000004041424344454647")
     aad = bytes.fromhex("50515253c0c1c2c3c4c5c6c7")
+    expected = (
+        "d31a8d34648e60db7b86afbc53ef7ec2"
+        "a4aded51296e08fea9e2b5a736ee62d6"
+        "3dbea45e8ca9671282fafb69da92728b"
+        "1a71de0a9e060b2905d6a5b67ecd3b36"
+        "92ddbd7f2d778b8c9803aee328091b58"
+        "fab324e4fad675945585808b4831d7bc"
+        "3ff4def08e4b7a9de576d26586cec64b"
+        "6116"
+        "1ae10b594f09e26a7e902ecbd0600691"#the 16-byte tag is appended last
+    )
 
     out = encrypt(key, nonce, aad, M.encode())
+    assert out.hex() == expected
+    
     # decrypting should give back the original message
     assert decrypt(key, nonce, aad, out) == M.encode()
 
