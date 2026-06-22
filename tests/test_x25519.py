@@ -1,4 +1,5 @@
-# Test X25519 (official RFC 7748 vectors)
+# Test X25519
+#known variables from RFC 7748 amd some generated ones
 
 from primitives.x25519 import x25519, generate_keypair, base
 
@@ -16,19 +17,19 @@ def test_single_vectors():
 
 
 def test_diffie_hellman():
-    alice_priv = (0x77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a).to_bytes(32, "big")
-    bob_priv = (0x5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb).to_bytes(32, "big")
+    P1_priv = (0x77076d0a7318a57d3c16c17251b26645df4c2f87ebc0992ab177fba51db92c2a).to_bytes(32, "big")
+    P2_priv = (0x5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb).to_bytes(32, "big")
 
-    alice_pub = x25519(alice_priv, base)
-    bob_pub = x25519(bob_priv, base)
-    assert alice_pub == (0x8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a).to_bytes(32, "big")
-    assert bob_pub == (0xde9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f).to_bytes(32, "big")
+    P1_pub = x25519(P1_priv, base)
+    P2_pub = x25519(P2_priv, base)
+    assert P1_pub == (0x8520f0098930a754748b7ddcb43ef75a0dbf3a0d26381af4eba4a98eaa9b4e6a).to_bytes(32, "big")
+    assert P2_pub == (0xde9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f).to_bytes(32, "big")
 
     # both sides must arrive at the same shared secret
-    alice_shared = x25519(alice_priv, bob_pub)
-    bob_shared = x25519(bob_priv, alice_pub)
-    assert alice_shared == bob_shared
-    assert alice_shared == (0x4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742).to_bytes(32, "big")
+    P1_shared = x25519(P1_priv, P2_pub)
+    P2_shared = x25519(P2_priv, P1_pub)
+    assert P1_shared == P2_shared
+    assert P1_shared == (0x4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742).to_bytes(32, "big")
 
 
 def test_iteration():
