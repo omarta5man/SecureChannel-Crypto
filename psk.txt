@@ -1,0 +1,1 @@
+strong shared password between server and client

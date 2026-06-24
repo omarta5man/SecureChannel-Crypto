@@ -54,3 +54,36 @@ A session runs in two phases.
 
 The three foundation primitives build on each other: HMAC is built on SHA-256, and HKDF
 is built on HMAC.
+
+## How to run
+
+### Tests
+
+```bash
+python -m tests.test_phase1
+python -m tests.test_2
+python -m tests.test_x25519
+python -m tests.test_protocol
+```
+
+The first three check the primitives against the official RFC and FIPS test vectors. The
+last one runs a full handshake over a local socket and checks messaging, tampering, replay
+and a wrong psk. Each file prints `pass` when everything is fine.
+
+### Chat
+
+The shared password is in "psk.txt", so both client and server read
+the same psk. In a real system this should never be in a file like this
+either its in env variables (.env file which is private or generated randomly)
+here it is committed only to make testing easy
+
+Run the peer on each side and answer the prompts (role, host, port, id). Start the server
+first, then the client:
+
+```bash
+python -m app.peer
+```
+
+For a local test answer the server side with server, 127.0.0.1, 9000, bob and the client
+side with client, 127.0.0.1, 9000, alice. After the handshake you can type a line and press
+enter to send it, and messages from the other side show up as they arrive

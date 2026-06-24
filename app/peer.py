@@ -1,11 +1,9 @@
 #chat over the secure channel
 
-#first make a pre shared key file (do this once, keep it secret):
-
-
-"""then run this on both terminals (copy psk.key to both):
+"""run this on both terminals:
 python -m app.peer
-it asks for the role, host, port, id and the psk file
+it asks for the role, host, port and id
+the shared password is read from psk.txt (same file on both sides)
 """
 import socket
 import threading
@@ -35,13 +33,12 @@ def chat(sock, session, my_name):
 
 
 def main():
-    #ask for the settings, then read the shared key file
+    #ask for the settings, the shared password is read from psk.txt
     role = input("role (server/client): ")
     host = input("host: ")
     port = int(input("port: "))
     my_id = input("your id: ")
-    psk_file = input("psk file: ")
-    psk = open(psk_file, "rb").read()
+    psk = open("psk.txt").read().strip().encode()
 
     if role == "server":
         #wait for the client to connect, then run the handshake
