@@ -33,7 +33,9 @@ def run_client(sock, psk, my_id):
 
     keys = derive_session_keys(psk, shared)
     send_message(sock, [hmac_sha256(psk, transcript + b"client")])#M3
-    return new_session(keys, "client")
+    session = new_session(keys, "client")
+    session["peer"] = server_id# remember the other side's name for the chat
+    return session
 
 
 def run_server(sock, psk, my_id):
@@ -51,4 +53,6 @@ def run_server(sock, psk, my_id):
         raise ValueError("handshake failed: client tag did not match")
 
     keys = derive_session_keys(psk, shared)
-    return new_session(keys, "server")
+    session = new_session(keys, "server")
+    session["peer"] = client_id# remember the other side's name for the chat
+    return session

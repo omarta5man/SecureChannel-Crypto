@@ -19,7 +19,9 @@ def read_loop(sock, session, my_name):
         while True:
             message = recv_message(sock)[0]
             text = unseal(session, message)
-            print(text.decode())
+            #print on a new line, then draw our prompt again so it stays tidy
+            print("\n" + session["peer"].decode() + ": " + text.decode())
+            print(my_name + "> ", end="", flush=True)
     except ConnectionError:
         print("connection closed")
 
@@ -46,8 +48,7 @@ def main():
         listener.bind((host, port))
         listener.listen(1)
         print("waiting for a connection on " + host + ":" + str(port))
-        conn, addr = listener.accept()
-        print("connected to " + str(addr))
+        conn = listener.accept()[0]
         session = run_server(conn, psk, my_id.encode())
     else:
         #dial the server, then run the handshake
