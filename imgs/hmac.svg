@@ -1,0 +1,64 @@
+<svg viewBox="0 0 720 540" xmlns="http://www.w3.org/2000/svg" role="img" font-family="var(--font-sans, system-ui, sans-serif)">
+  <title>HMAC-SHA256</title>
+  <desc>HMAC prepares the key, derives an inner and outer pad, hashes the inner pad with the message, then hashes the outer pad with that result to produce a 32-byte tag.</desc>
+  <defs>
+    <marker id="arrowh" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="var(--color-text-secondary, #5F5E5A)"/>
+    </marker>
+  </defs>
+  <style>
+    .lbl  { fill: var(--color-text-primary, #2C2C2A); font-size: 14px; font-weight: 600; }
+    .sub  { fill: var(--color-text-secondary, #5F5E5A); font-size: 12px; font-family: var(--font-mono, ui-monospace, monospace); }
+    .sm   { fill: var(--color-text-secondary, #5F5E5A); font-size: 10.5px; }
+    .flow { stroke: var(--color-text-secondary, #5F5E5A); stroke-width: 1.6; fill: none; }
+    .neu  { fill: var(--color-background-secondary, #F1EFE8); stroke: var(--color-border-secondary, #D3D1C7); stroke-width: 1.2; }
+    .blu  { fill: #E6F1FB; stroke: #378ADD; stroke-width: 1.2; }
+    .blu2 { fill: #B5D4F4; stroke: #378ADD; stroke-width: 1.2; }
+  </style>
+
+  <text x="360" y="30" text-anchor="middle" class="lbl" font-size="20">HMAC-SHA256 — authentication tag</text>
+
+  <rect x="250" y="48" width="100" height="36" rx="8" class="neu"/>
+  <text x="300" y="71" text-anchor="middle" class="lbl">Key</text>
+  <rect x="470" y="48" width="130" height="36" rx="8" class="neu"/>
+  <text x="535" y="71" text-anchor="middle" class="lbl">Message</text>
+
+  <line x1="300" y1="84" x2="300" y2="104" class="flow" marker-end="url(#arrowh)"/>
+  <rect x="200" y="104" width="200" height="52" rx="9" class="neu"/>
+  <text x="300" y="126" text-anchor="middle" class="lbl" font-size="13">Prepare key</text>
+  <text x="300" y="145" text-anchor="middle" class="sub" font-size="11">hash if &gt; 64 B, pad to 64 B</text>
+
+  <line x1="300" y1="156" x2="245" y2="190" class="flow" marker-end="url(#arrowh)"/>
+  <line x1="300" y1="156" x2="465" y2="190" class="flow" marker-end="url(#arrowh)"/>
+
+  <rect x="150" y="190" width="180" height="48" rx="9" class="blu"/>
+  <text x="240" y="212" text-anchor="middle" class="lbl" font-size="13">inner pad</text>
+  <text x="240" y="229" text-anchor="middle" class="sub">key XOR 0x36</text>
+  <rect x="380" y="190" width="180" height="48" rx="9" class="blu"/>
+  <text x="470" y="212" text-anchor="middle" class="lbl" font-size="13">outer pad</text>
+  <text x="470" y="229" text-anchor="middle" class="sub">key XOR 0x5c</text>
+
+  <line x1="240" y1="238" x2="262" y2="286" class="flow" marker-end="url(#arrowh)"/>
+  <path d="M535,84 V311 H392" class="flow" marker-end="url(#arrowh)"/>
+  <text x="470" y="303" class="sm">message</text>
+
+  <rect x="150" y="286" width="240" height="50" rx="9" class="blu"/>
+  <text x="270" y="309" text-anchor="middle" class="lbl" font-size="13">SHA-256</text>
+  <text x="270" y="326" text-anchor="middle" class="sub">inner pad ‖ message</text>
+
+  <line x1="270" y1="336" x2="270" y2="352" class="flow" marker-end="url(#arrowh)"/>
+  <rect x="185" y="352" width="170" height="36" rx="8" class="neu"/>
+  <text x="270" y="375" text-anchor="middle" class="lbl" font-size="13">inner hash (32 B)</text>
+
+  <line x1="270" y1="388" x2="302" y2="410" class="flow" marker-end="url(#arrowh)"/>
+  <path d="M470,238 V410" class="flow" marker-end="url(#arrowh)"/>
+  <text x="478" y="330" class="sm">outer pad</text>
+
+  <rect x="205" y="410" width="280" height="50" rx="9" class="blu"/>
+  <text x="345" y="433" text-anchor="middle" class="lbl" font-size="13">SHA-256</text>
+  <text x="345" y="450" text-anchor="middle" class="sub">outer pad ‖ inner hash</text>
+
+  <line x1="345" y1="460" x2="345" y2="472" class="flow" marker-end="url(#arrowh)"/>
+  <rect x="245" y="472" width="200" height="44" rx="9" class="blu2"/>
+  <text x="345" y="499" text-anchor="middle" class="lbl">HMAC tag — 32 bytes</text>
+</svg>

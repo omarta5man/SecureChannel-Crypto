@@ -1,0 +1,69 @@
+<svg viewBox="0 0 760 595" xmlns="http://www.w3.org/2000/svg" role="img" font-family="var(--font-sans, system-ui, sans-serif)">
+  <title>ChaCha20-Poly1305 AEAD</title>
+  <desc>ChaCha20 at counter 0 makes a one-time key, ChaCha20 at counter 1 encrypts the plaintext into ciphertext, and Poly1305 over the formatted associated data and ciphertext produces a tag. The output is the ciphertext followed by the tag.</desc>
+  <defs>
+    <marker id="arrowa" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="var(--color-text-secondary, #5F5E5A)"/>
+    </marker>
+  </defs>
+  <style>
+    .lbl  { fill: var(--color-text-primary, #2C2C2A); font-size: 14px; font-weight: 600; }
+    .sub  { fill: var(--color-text-secondary, #5F5E5A); font-size: 12px; font-family: var(--font-mono, ui-monospace, monospace); }
+    .flow { stroke: var(--color-text-secondary, #5F5E5A); stroke-width: 1.6; fill: none; }
+    .neu  { fill: var(--color-background-secondary, #F1EFE8); stroke: var(--color-border-secondary, #D3D1C7); stroke-width: 1.2; }
+    .blu  { fill: #E6F1FB; stroke: #378ADD; stroke-width: 1.2; }
+    .blu2 { fill: #B5D4F4; stroke: #378ADD; stroke-width: 1.2; }
+  </style>
+
+  <text x="380" y="30" text-anchor="middle" class="lbl" font-size="20">ChaCha20-Poly1305 — authenticated encryption</text>
+
+  <rect x="230" y="48" width="140" height="36" rx="8" class="neu"/>
+  <text x="300" y="71" text-anchor="middle" class="lbl">Key + Nonce</text>
+  <line x1="300" y1="84" x2="165" y2="118" class="flow" marker-end="url(#arrowa)"/>
+  <line x1="300" y1="84" x2="400" y2="118" class="flow" marker-end="url(#arrowa)"/>
+
+  <!-- left: one-time key -->
+  <rect x="70" y="120" width="180" height="46" rx="9" class="blu"/>
+  <text x="160" y="141" text-anchor="middle" class="lbl" font-size="13">ChaCha20</text>
+  <text x="160" y="158" text-anchor="middle" class="sub">counter 0</text>
+  <line x1="160" y1="166" x2="160" y2="196" class="flow" marker-end="url(#arrowa)"/>
+  <rect x="80" y="196" width="160" height="40" rx="8" class="blu2"/>
+  <text x="160" y="221" text-anchor="middle" class="lbl" font-size="12">one-time key (otk)</text>
+
+  <!-- right: encryption -->
+  <rect x="310" y="120" width="190" height="46" rx="9" class="blu"/>
+  <text x="405" y="141" text-anchor="middle" class="lbl" font-size="13">ChaCha20</text>
+  <text x="405" y="158" text-anchor="middle" class="sub">counter 1 (keystream)</text>
+  <rect x="560" y="122" width="150" height="40" rx="8" class="neu"/>
+  <text x="635" y="147" text-anchor="middle" class="lbl" font-size="13">plaintext</text>
+  <line x1="405" y1="166" x2="405" y2="196" class="flow" marker-end="url(#arrowa)"/>
+  <rect x="325" y="196" width="160" height="42" rx="9" class="blu"/>
+  <text x="405" y="222" text-anchor="middle" class="lbl" font-size="13">XOR keystream</text>
+  <path d="M635,162 V217 H487" class="flow" marker-end="url(#arrowa)"/>
+  <line x1="405" y1="238" x2="405" y2="266" class="flow" marker-end="url(#arrowa)"/>
+  <rect x="325" y="266" width="160" height="40" rx="8" class="blu2"/>
+  <text x="405" y="291" text-anchor="middle" class="lbl" font-size="13">ciphertext</text>
+
+  <!-- authenticate -->
+  <rect x="600" y="300" width="120" height="36" rx="8" class="neu"/>
+  <text x="660" y="323" text-anchor="middle" class="lbl" font-size="13">AAD</text>
+  <rect x="300" y="346" width="330" height="48" rx="9" class="neu"/>
+  <text x="465" y="368" text-anchor="middle" class="lbl" font-size="12">format the data</text>
+  <text x="465" y="385" text-anchor="middle" class="sub" font-size="11">aad | pad | ct | pad | lengths</text>
+  <line x1="405" y1="306" x2="405" y2="346" class="flow" marker-end="url(#arrowa)"/>
+  <line x1="660" y1="336" x2="575" y2="346" class="flow" marker-end="url(#arrowa)"/>
+
+  <rect x="305" y="414" width="200" height="48" rx="9" class="blu"/>
+  <text x="405" y="436" text-anchor="middle" class="lbl" font-size="13">Poly1305</text>
+  <text x="405" y="453" text-anchor="middle" class="sub">with otk</text>
+  <line x1="465" y1="394" x2="440" y2="414" class="flow" marker-end="url(#arrowa)"/>
+  <path d="M160,236 V438 H305" class="flow" marker-end="url(#arrowa)"/>
+
+  <line x1="405" y1="462" x2="405" y2="482" class="flow" marker-end="url(#arrowa)"/>
+  <rect x="325" y="482" width="160" height="40" rx="8" class="blu2"/>
+  <text x="405" y="507" text-anchor="middle" class="lbl" font-size="13">tag (16 bytes)</text>
+
+  <line x1="405" y1="522" x2="405" y2="544" class="flow" marker-end="url(#arrowa)"/>
+  <rect x="285" y="544" width="240" height="38" rx="9" class="neu"/>
+  <text x="405" y="568" text-anchor="middle" class="lbl" font-size="13">output = ciphertext ‖ tag</text>
+</svg>

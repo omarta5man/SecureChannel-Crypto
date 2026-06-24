@@ -1,0 +1,64 @@
+<svg viewBox="0 0 720 450" xmlns="http://www.w3.org/2000/svg" role="img" font-family="var(--font-sans, system-ui, sans-serif)">
+  <title>X25519</title>
+  <desc>Each side picks a 32 byte private key and computes a public key from the base point. They swap public keys over the network, then each combines its own private key with the other side's public key and both arrive at the same shared secret.</desc>
+  <defs>
+    <marker id="arrowx" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="var(--color-text-secondary, #5F5E5A)"/>
+    </marker>
+  </defs>
+  <style>
+    .lbl  { fill: var(--color-text-primary, #2C2C2A); font-size: 14px; font-weight: 600; }
+    .sub  { fill: var(--color-text-secondary, #5F5E5A); font-size: 12px; font-family: var(--font-mono, ui-monospace, monospace); }
+    .sm   { fill: var(--color-text-secondary, #5F5E5A); font-size: 10.5px; }
+    .flow { stroke: var(--color-text-secondary, #5F5E5A); stroke-width: 1.6; fill: none; }
+    .neu  { fill: var(--color-background-secondary, #F1EFE8); stroke: var(--color-border-secondary, #D3D1C7); stroke-width: 1.2; }
+    .blu  { fill: #E6F1FB; stroke: #378ADD; stroke-width: 1.2; }
+    .blu2 { fill: #B5D4F4; stroke: #378ADD; stroke-width: 1.2; }
+    .box  { fill: none; stroke: var(--color-border-secondary, #D3D1C7); stroke-width: 1.4; stroke-dasharray: 6 5; }
+  </style>
+
+  <text x="360" y="30" text-anchor="middle" class="lbl" font-size="20">X25519, agree on a shared secret</text>
+
+  <text x="150" y="62" text-anchor="middle" class="lbl" font-size="13">Client</text>
+  <text x="570" y="62" text-anchor="middle" class="lbl" font-size="13">Server</text>
+
+  <rect x="60" y="76" width="180" height="46" rx="9" class="blu"/>
+  <text x="150" y="98" text-anchor="middle" class="lbl" font-size="12">private a</text>
+  <text x="150" y="114" text-anchor="middle" class="sub" font-size="11">32 random bytes</text>
+  <rect x="480" y="76" width="180" height="46" rx="9" class="blu"/>
+  <text x="570" y="98" text-anchor="middle" class="lbl" font-size="12">private b</text>
+  <text x="570" y="114" text-anchor="middle" class="sub" font-size="11">32 random bytes</text>
+
+  <line x1="150" y1="122" x2="150" y2="158" class="flow" marker-end="url(#arrowx)"/>
+  <line x1="570" y1="122" x2="570" y2="158" class="flow" marker-end="url(#arrowx)"/>
+
+  <rect x="60" y="158" width="180" height="46" rx="9" class="neu"/>
+  <text x="150" y="180" text-anchor="middle" class="lbl" font-size="12">public A</text>
+  <text x="150" y="196" text-anchor="middle" class="sub" font-size="11">ladder(a, 9)</text>
+  <rect x="480" y="158" width="180" height="46" rx="9" class="neu"/>
+  <text x="570" y="180" text-anchor="middle" class="lbl" font-size="12">public B</text>
+  <text x="570" y="196" text-anchor="middle" class="sub" font-size="11">ladder(b, 9)</text>
+
+  <rect x="295" y="156" width="170" height="50" rx="10" class="box"/>
+  <text x="380" y="180" text-anchor="middle" class="sm">swap public keys</text>
+  <text x="380" y="195" text-anchor="middle" class="sm">over the network</text>
+
+  <line x1="240" y1="178" x2="293" y2="178" class="flow" marker-end="url(#arrowx)"/>
+  <line x1="480" y1="178" x2="467" y2="178" class="flow" marker-end="url(#arrowx)"/>
+  <line x1="340" y1="206" x2="160" y2="258" class="flow" marker-end="url(#arrowx)"/>
+  <line x1="420" y1="206" x2="560" y2="258" class="flow" marker-end="url(#arrowx)"/>
+
+  <rect x="60" y="260" width="180" height="50" rx="9" class="neu"/>
+  <text x="150" y="282" text-anchor="middle" class="lbl" font-size="12">shared</text>
+  <text x="150" y="298" text-anchor="middle" class="sub" font-size="11">ladder(a, B)</text>
+  <rect x="480" y="260" width="180" height="50" rx="9" class="neu"/>
+  <text x="570" y="282" text-anchor="middle" class="lbl" font-size="12">shared</text>
+  <text x="570" y="298" text-anchor="middle" class="sub" font-size="11">ladder(b, A)</text>
+
+  <line x1="150" y1="310" x2="300" y2="368" class="flow" marker-end="url(#arrowx)"/>
+  <line x1="570" y1="310" x2="420" y2="368" class="flow" marker-end="url(#arrowx)"/>
+
+  <rect x="250" y="370" width="220" height="52" rx="10" class="blu2"/>
+  <text x="360" y="393" text-anchor="middle" class="lbl">same shared secret</text>
+  <text x="360" y="410" text-anchor="middle" class="sub" font-size="11">32 bytes, goes into HKDF</text>
+</svg>

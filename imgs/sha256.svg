@@ -1,0 +1,75 @@
+<svg viewBox="0 0 760 770" xmlns="http://www.w3.org/2000/svg" role="img" font-family="var(--font-sans, system-ui, sans-serif)">
+  <title>SHA-256 pipeline</title>
+  <desc>How SHA-256 turns a message into a 32-byte digest: padding, splitting into 512-bit blocks, then per-block message schedule and 64-round compression that updates an 8-word state, ending in the final digest.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="var(--color-text-secondary, #5F5E5A)"/>
+    </marker>
+  </defs>
+
+  <style>
+    .lbl   { fill: var(--color-text-primary, #2C2C2A); font-size: 14px; font-weight: 600; }
+    .sub   { fill: var(--color-text-secondary, #5F5E5A); font-size: 12px; font-family: var(--font-mono, ui-monospace, monospace); }
+    .num   { fill: var(--color-text-secondary, #5F5E5A); font-size: 12px; }
+    .flow  { stroke: var(--color-text-secondary, #5F5E5A); stroke-width: 1.6; fill: none; }
+    .neu   { fill: var(--color-background-secondary, #F1EFE8); stroke: var(--color-border-secondary, #D3D1C7); stroke-width: 1.2; }
+    .blu   { fill: #E6F1FB; stroke: #378ADD; stroke-width: 1.2; }
+    .blu2  { fill: #B5D4F4; stroke: #378ADD; stroke-width: 1.2; }
+  </style>
+
+  <text x="380" y="32" text-anchor="middle" class="lbl" font-size="20">SHA-256 — from message to 32-byte digest</text>
+
+  <rect x="270" y="50" width="220" height="42" rx="10" class="neu"/>
+  <text x="380" y="76" text-anchor="middle" class="lbl">Message — any length</text>
+  <line x1="380" y1="92" x2="380" y2="116" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="118" width="340" height="58" rx="10" class="blu"/>
+  <text x="380" y="142" text-anchor="middle" class="lbl">1 · Padding</text>
+  <text x="380" y="162" text-anchor="middle" class="sub">add 1 bit + zeros + 64-bit length → 512-bit blocks</text>
+  <line x1="380" y1="176" x2="380" y2="200" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="202" width="340" height="44" rx="10" class="neu"/>
+  <text x="380" y="229" text-anchor="middle" class="lbl">2 · Split into 512-bit blocks</text>
+
+  <rect x="287" y="258" width="56" height="22" rx="5" class="neu"/>
+  <text x="315" y="273" text-anchor="middle" class="num">B1</text>
+  <rect x="352" y="258" width="56" height="22" rx="5" class="neu"/>
+  <text x="380" y="273" text-anchor="middle" class="num">B2</text>
+  <rect x="417" y="258" width="56" height="22" rx="5" class="neu"/>
+  <text x="445" y="273" text-anchor="middle" class="num">B3</text>
+  <text x="492" y="273" class="num">…</text>
+  <line x1="380" y1="282" x2="380" y2="306" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="14" y="372" width="126" height="74" rx="10" class="blu"/>
+  <text x="77" y="396" text-anchor="middle" class="lbl" font-size="13">H0–H7</text>
+  <text x="77" y="414" text-anchor="middle" class="sub" font-size="10.5">initial state</text>
+  <text x="77" y="430" text-anchor="middle" class="sub" font-size="10.5">(√ first 8 primes)</text>
+  <line x1="140" y1="409" x2="172" y2="409" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="172" y="308" width="448" height="306" rx="14" fill="none" stroke="var(--color-border-secondary, #D3D1C7)" stroke-width="1.4" stroke-dasharray="6 5"/>
+  <text x="200" y="332" class="lbl" font-size="13">For each 512-bit block:</text>
+
+  <rect x="210" y="346" width="350" height="44" rx="9" class="blu"/>
+  <text x="385" y="373" text-anchor="middle" class="lbl" font-size="13">Message schedule: 16 → 64 words</text>
+  <line x1="385" y1="390" x2="385" y2="412" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="414" width="350" height="58" rx="9" class="blu2"/>
+  <text x="385" y="438" text-anchor="middle" class="lbl" font-size="13">Compression — 64 rounds</text>
+  <text x="385" y="458" text-anchor="middle" class="sub">Ch, Maj, Σ0, Σ1, K[i], W[i]</text>
+  <line x1="385" y1="472" x2="385" y2="494" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="496" width="350" height="44" rx="9" class="blu"/>
+  <text x="385" y="523" text-anchor="middle" class="lbl" font-size="13">Add a–h back into state (mod 2³²)</text>
+
+  <path d="M560,518 H588 V368 H560" class="flow" marker-end="url(#arrow)"/>
+  <text x="596" y="446" class="num" transform="rotate(90 596 446)">next block</text>
+
+  <line x1="385" y1="614" x2="385" y2="640" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="200" y="642" width="370" height="60" rx="10" class="blu2"/>
+  <text x="385" y="666" text-anchor="middle" class="lbl">3 · Final digest</text>
+  <text x="385" y="687" text-anchor="middle" class="sub">H0–H7 → 32 bytes → 64 hex characters</text>
+
+  <text x="385" y="730" text-anchor="middle" class="sub" font-size="11">sha256("abc") = ba7816bf…f20015ad</text>
+</svg>

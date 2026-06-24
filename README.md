@@ -40,15 +40,17 @@ A session runs in two phases.
 3. **Replay protection.** The counter strictly increases and is tied to the nonce, so
    replayed or reordered messages are detected and rejected.
 
+![How SecureChannel fits together](imgs/overview.svg)
+
 ## Cryptographic primitives
 
-| Component             | Specification | What it gives us                      |
-| --------------------- | ------------- | ------------------------------------- |
-| SHA-256               | FIPS 180-4    | secure hashing                        |
-| HMAC                  | RFC 2104      | message authentication                |
-| HKDF                  | RFC 5869      | deriving keys from one shared secret  |
-| ChaCha20-Poly1305     | RFC 8439      | authenticated encryption (with AAD)   |
-| X25519                | RFC 7748      | Diffie–Hellman key exchange           |
+| Component | Specification | What it gives us |
+| --------- | ------------- | ---------------- |
+| [SHA-256](About/Sha256.md) | FIPS 180-4 | secure hashing |
+| [HMAC](About/HMAC.md) | RFC 2104 | message authentication |
+| [HKDF](About/HKDF.md) | RFC 5869 | deriving keys from one shared secret |
+| [ChaCha20-Poly1305](About/ChaCha20-Poly1305.md) | RFC 8439 | authenticated encryption (with AAD) |
+| [X25519](About/X25519.md) | RFC 7748 | Diffie–Hellman key exchange |
 
 The three foundation primitives build on each other: HMAC is built on SHA-256, and HKDF
 is built on HMAC.
