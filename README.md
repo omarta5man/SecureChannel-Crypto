@@ -3,10 +3,8 @@
 A secure communication system in Python for Applied Cryptography Course
 
 Two parties establish a shared secret over an insecure network, authenticate each
-other, and then exchange messages with confidentiality, integrity, and authenticity
-(including support for associated data). Every cryptographic primitive is implemented
-from its official specification, no crypto libraries are used inside the
-implementation.
+other, and then exchange messages with confidentiality, integrity, and authenticity.
+Every cryptographic primitive is implemented from its official specification.
 
 ## Course
 
@@ -21,15 +19,15 @@ A session runs in two phases.
 **Phase A — Handshake (key setup and authentication).**
 
 1. **Key exchange.** Each side creates a temporary key pair and they run a
-   Diffie–Hellman exchange over the X25519 curve to agree on a shared secret.
+   Diffie–Hellman exchange over the X25519 curve to agree on a shared secret
 2. **Authentication.** Both sides already share a long-term pre-shared key (PSK), agreed
    in person and read from a file. Each side computes `HMAC(PSK, transcript)` over
    the whole handshake (both public keys, both identities, the version) and sends it for
    the other side to check. If the tags don't match, the connection is aborted. This is
    what stops a man-in-the-middle attacker.
-3. **Key derivation.** The shared secret is fed into HKDF (with the PSK mixed in
-   as the salt) to produce two separate directional keys (client→server and
-   server→client) plus the starting nonce material.
+3. **Key derivation.** The shared secret is fed into HKDF (with the PSK)
+   to produce two separate directional keys (client→server and server→client)
+   plus the starting nonce material.
 
 **Phase B — Secure messaging.**
 
@@ -40,7 +38,7 @@ A session runs in two phases.
 3. **Replay protection.** The counter strictly increases and is tied to the nonce, so
    replayed or reordered messages are detected and rejected.
 
-![How SecureChannel fits together](imgs/overview.svg)
+![All together](imgs/overview.svg)
 
 ## Cryptographic primitives
 
