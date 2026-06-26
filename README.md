@@ -85,3 +85,7 @@ python -m app.peer
 For a local test answer the server side with server, 127.0.0.1, 9000, bob and the client
 side with client, 127.0.0.1, 9000, alice. After the handshake you can type a line and press
 enter to send it, and messages from the other side show up as they arrive
+
+### Example session
+
+![session](imgs/session.png)
